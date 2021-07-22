@@ -1,0 +1,21 @@
+html
+  head
+    title FILESCAN
+    link(rel="stylesheet",href="style.css")
+  body
+    div
+        div(class='header')
+            img(src='logo.gif')
+        div(class='header')
+            h1 FILESCAN - Antivirus service for detecting trojans, viruses, malware &amp; other malicious threats
+        hr
+
+    div 
+        p File local service is a Docker container that includes the ClamAV virus scanning software, plus the glue needed to perform scans using REST calls.
+        p ClamAV will keep the virus definitions updated automatically.
+        p The service is ready to receive scan requests on: 
+        p(class='url') #{url}
+
+    div(class='footer')
+        span Service by MBN Data ApS - Version 1.0 - 
+            a(href='https://filescan.mbndata.dk', target='_new') Click here for the cloud solution

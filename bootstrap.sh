@@ -32,5 +32,7 @@ clamscan -V
 echo ""
 echo "$( date ) The ClamAV container is ready"
 
-# TODO: Start the node rest server here, for now, just stay alive
-/bin/bash
+# Start the nide application
+echo "Starting MBN Data Local file scan service..."
+cd $APP_PATH
+node index.js

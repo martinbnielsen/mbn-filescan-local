@@ -3,7 +3,9 @@ const express = require('express');
 const morgan = require('morgan');
 const webServerConfig = require('../config/web-server.js');
 const routes = require('../routes/filescanRoutes'); 
-    
+const path = require("path");
+const router = express.Router();
+
 let httpServer;
 
 function initialize() {
@@ -18,8 +20,15 @@ function initialize() {
     app.use(bodyParser.urlencoded({ limit: '14mb', extended: true }));
     app.use(bodyParser.json({limit: '14mb', extended: true}));
 
+    // Setup PUG templating
+    app.set("view engine", "pug");
+    app.set("views", path.join(__dirname, "/../views"));
+
     // Mount the router at /api so all its routes start with /api
     routes(app); //register the route
+
+    // Setup static files
+    app.use(express.static('public'));
 
     httpServer.listen(webServerConfig.port, err => {
       if (err) {

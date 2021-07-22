@@ -4,6 +4,14 @@
  * @param {*} res 
  */
 
+exports.showIndex = async function(req, res) {
+    var data = {
+        url: req.protocol + '://' + req.get('host') + req.originalUrl + 'scan'
+    };
+
+    res.render("index", data);
+}
+
 exports.scanFile = async function(req, res) {
     var fs   = require('fs');
     var cp = require('child_process');

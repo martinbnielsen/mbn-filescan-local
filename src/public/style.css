@@ -1,0 +1,19 @@
+body {
+    font-family: 'Oracle Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;    
+}
+
+div.header {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+div.footer {
+    position:absolute;
+    left: 10px;
+    bottom: 10px;
+}
+
+p.url, a {
+    font-weight: bold;
+    color: blue;
+}
