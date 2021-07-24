@@ -3,6 +3,12 @@ LABEL maintainer="Martin B. Nielsen"
 
 RUN apk update && apk add pv clamav clamav-libunrar unrar bash npm
 
+# Setup clamd directory
+RUN mkdir /run/clamav \
+    && chown clamav:clamav /run/clamav \
+    && touch /var/log/clamav/freshclam.log \
+    && chown clamav:clamav /var/log/clamav/freshclam.log
+
 # Create app directory
 ENV APP_PATH /usr/src/app
 WORKDIR $APP_PATH
@@ -12,9 +18,8 @@ WORKDIR $APP_PATH
 # where available (npm@5+)
 COPY src/package*.json ./
 
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
+# Build node project for production
+RUN npm ci --only=production
 
 # Bundle app source
 COPY src/. .

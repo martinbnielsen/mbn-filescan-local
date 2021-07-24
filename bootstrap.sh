@@ -1,38 +1,24 @@
   
 #!/bin/bash
 
-set -euo pipefail
-echo "Starting the ClamAV container"
-echo "Updating ClamAV scan DB"
-set +e
-freshclam
-FRESHCLAM_EXIT=$?
-set -e
-echo ""
-
-if [[ "$FRESHCLAM_EXIT" -eq "0" ]]; then
-    echo ""
-    echo "Freshclam updated the DB"
-    echo ""
-elif [[ "$FRESHCLAM_EXIT" -eq "1" ]]; then
-    echo ""
-    echo "ClamAV DB already up to date..."
-    echo ""
-else
-    echo ""
-    echo "An error occurred (freshclam returned with exit code '$FRESHCLAM_EXIT')"
-    echo ""
-    exit $FRESHCLAM_EXIT
-fi
-echo ""
-clamscan -V
-
-# TODO: Setup periodic virus database polling
+# Start the clamAV services
+echo "Starting ClamAV"
+freshclam -F
+sleep 10
+clamd &
+freshclam -d &
+echo "Waiting for clamAV to start..."
+while [ ! -S /run/clamav/clamd.sock ]
+do
+  echo "Waiting for clamAV to start..."
+  sleep 2 # or less like 0.2
+done
+sleep 2
 
 echo ""
 echo "$( date ) The ClamAV container is ready"
 
-# Start the nide application
-echo "Starting MBN Data Local file scan service..."
+# Start the node application
+echo "Starting MBN Data Local file scan service on http://localhost:3000"
 cd $APP_PATH
-node index.js
+node index.js & tail -f /var/log/clamav/freshclam.log

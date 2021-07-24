@@ -85,8 +85,6 @@ exports.scanFile = async function(req, res) {
         // Return the result
         r.result = r.infectedFiles?"Infected":"Success";
         r.buffer = buffer.toString('utf8');
-        r.id     = id;
-
         console.log('Scan performed', scanData);
     }
     catch (err) {

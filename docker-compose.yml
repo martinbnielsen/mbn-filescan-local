@@ -2,5 +2,6 @@ version: "3.9"
 services:
   filescan:
     build: .
+    image: "mbndata/filescan:1.0"
     ports:
       - "3000:3000"

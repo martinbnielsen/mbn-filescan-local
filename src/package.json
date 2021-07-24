@@ -5,8 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "node index.js",
-    "dev": "nodemon index.js",
-    "start": "node index.js &"
+    "dev": "cp config.dev.env config.env; nodemon index.js",
+    "start": "node index.js",
+    "build": "docker-compose down; cp config.prod.env config.env; docker-compose build; docker-compose up",
+    "scan": "docker scan --accept-license mbndata/filescan:1.0"
   },
   "repository": {
     "type": "git",
